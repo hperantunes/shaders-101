@@ -10,13 +10,10 @@ uniform vec4 my_color: source_color;
 
 void vertex() {
 	
-	float speed = 2.0;
+	float speed = my_float;
 	
-	if (VERTEX.x < 0. && VERTEX.y < 0.) {
-		//VERTEX += vec2(-100., -20.);
-	}
-	//VERTEX += vec2(cos(TIME * speed) * 100.0, 0.0);
-	//VERTEX += vec2(0.0, sin(TIME * speed) * 100.0);
+	VERTEX += vec2(cos(TIME * speed) * 100.0, 0.0);
+	VERTEX += vec2(0.0, sin(TIME * speed) * 100.0);
 }
 
 void fragment() {
