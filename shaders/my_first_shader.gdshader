@@ -1,5 +1,13 @@
 shader_type canvas_item;
 
+group_uniforms FirstGroup;
+uniform float my_float: hint_range(1.0, 10.0) = 5.0;
+uniform int my_int = 10;
+
+group_uniforms SecondGroup;
+uniform bool my_bool;
+uniform vec4 my_color: source_color;
+
 void vertex() {
 	
 	float speed = 2.0;
@@ -18,5 +26,5 @@ void fragment() {
 	float mix_percentage = (sin(TIME * 5.0) + 1.0) * 0.5;
 	vec4 mixed_color = mix(color1, color2, mix_percentage);
 	
-	COLOR = texture(TEXTURE, UV) * mixed_color;
+	COLOR = texture(TEXTURE, UV) * my_color;
 }
