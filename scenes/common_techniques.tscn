@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bw86fsv6rvi5h"]
+[gd_scene load_steps=37 format=3 uid="uid://bw86fsv6rvi5h"]
 
 [ext_resource type="Script" path="res://scripts/common_techniques.gd" id="1_0ugy3"]
 [ext_resource type="Texture2D" uid="uid://dw27ks2iy6r18" path="res://assets/other/Terrain (16x16).png" id="2_4ntks"]
@@ -15,6 +15,7 @@
 [ext_resource type="Shader" path="res://shaders/masking.gdshader" id="13_oe3da"]
 [ext_resource type="Texture2D" uid="uid://daw35yrqwa2a5" path="res://assets/other/Spike Head.png" id="14_41w2m"]
 [ext_resource type="Texture2D" uid="uid://gguadl0k1spk" path="res://assets/other/circle_mask2.png" id="14_iqjxq"]
+[ext_resource type="Shader" path="res://shaders/distortion.gdshader" id="16_2h86d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2lr3w"]
 shader = ExtResource("4_cuf22")
@@ -538,6 +539,27 @@ _data = {
 shader = ExtResource("13_oe3da")
 shader_parameter/mask_texture = ExtResource("14_iqjxq")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p5xqf"]
+seed = 1
+frequency = 0.015
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2434b"]
+seamless = true
+noise = SubResource("FastNoiseLite_p5xqf")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p4yt1"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gi7bv"]
+seamless = true
+noise = SubResource("FastNoiseLite_p4yt1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kcpbb"]
+shader = ExtResource("16_2h86d")
+shader_parameter/offset1 = Vector2(0.1, 0.1)
+shader_parameter/offset2 = Vector2(0.2, 0.2)
+shader_parameter/noise_texture1 = SubResource("NoiseTexture2D_2434b")
+shader_parameter/noise_texture2 = SubResource("NoiseTexture2D_gi7bv")
+
 [node name="CommonTechniques" type="Node2D"]
 script = ExtResource("1_0ugy3")
 
@@ -597,3 +619,9 @@ material = SubResource("ShaderMaterial_cfs5k")
 position = Vector2(100, 400)
 scale = Vector2(3, 3)
 texture = ExtResource("14_41w2m")
+
+[node name="Distortion" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_kcpbb")
+position = Vector2(600, 120)
+texture = ExtResource("9_w2rov")
